@@ -1,0 +1,9 @@
+D->abC	(1)
+D->bAC	(2)
+C->Ab	(3)
+A->aD	(4)
+D->cCA	(5)
+	a	b	c	$	
+A	4 				
+C	3 				
+D	1 	2 	5 		

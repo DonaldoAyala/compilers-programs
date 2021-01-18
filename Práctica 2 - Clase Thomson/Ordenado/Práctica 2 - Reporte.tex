@@ -1,0 +1,137 @@
+% Font size and paper size are specified
+\documentclass[12pt,letterpaper]{article} 
+%Set language to spanish
+\usepackage[spanish, es-tabla]{babel}
+% Specifies data for frontpage of document
+\title{Práctica 2}
+\author{Ayala Segoviano Donaldo Horacio}
+\date{28 de Octubre del 2020}
+% For margins
+\usepackage{geometry}
+\geometry{letterpaper, top=3cm, left=3cm, right=3cm}
+% Numbers images according to sections
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+% For images
+\usepackage{graphicx}
+%For formating links
+\usepackage{hyperref}
+\usepackage{natbib}
+%Includes tools for making indexes
+\usepackage{makeidx}
+% Allows multiple columns
+\usepackage{multicol}
+%
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{amssymb}
+\lhead{}
+\rhead{Algoritmo de Thompson. Donaldo Ayala}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\begin{document}
+
+
+\centerline{\bf Compiladores, Sem: 2020-1, 3CV1, Práctica 2, 1 de Noviembre del 2020}
+\centerline{}
+\centerline{}
+\begin{center}
+\Large{\textsc{Práctica 2: Implementación del Algoritmo McNaughton-Yamada-Thompson}}
+\end{center}
+\centerline{}
+\centerline{\bf {Ayala Segoviano Donaldo Horacio}}
+\centerline{}
+\centerline{Escuela Superior de Cómputo}
+\centerline{Instituto Politécnico Nacional, México}
+\centerline{$ayala.segoviano.donaldo@gmail.com$}
+\newtheorem{Theorem}{\quad Theorem}[section]
+\newtheorem{Definition}[Theorem]{\quad Definition}
+\newtheorem{Corollary}[Theorem]{\quad Corollary}
+\newtheorem{Lemma}[Theorem]{\quad Lemma}
+\newtheorem{Example}[Theorem]{\quad Example}
+
+\bigskip
+\bigskip
+
+
+\textbf{Objetivo:} Utilizando los principios de la programación Orientada a Objetos, diseñar y desarrollar la clase Thomsonconel método:\\
+\begin{itemize}
+    \item convertir(expresión\_regular:string): AFN
+\end{itemize}
+
+\bigskip
+\bigskip
+
+\setcounter{page}{1}
+\thispagestyle{empty}
+
+
+
+\section{Introducción}
+El algoritmo AlgoritmoMcNaughton-Yamada-Thompson (también conocido como método de Thompson), sirve para obtener autómatas finitos no deterministas con transiciones vacías (AFND-$\epsilon$) a partir de expresiones regulares (ER).\\
+
+
+
+
+
+
+\newpage
+\section{Implementación de la clase Thompson}
+\subsection{Clase Nodo}
+
+\subsubsection{Descripción}
+Para la implementación de la clase Thompson se implementó la clase Nodo, que permite generar arboles binarios de expresión y así simplificar la generación del AFN.\\
+
+\subsubsection{Atributos}
+La clase Nodo cuenta con los siguientes atributos:
+\begin{itemize}
+    \item (-)\textbf{Nodo*} hijo\_izquierdo : guarda el hijo izquierdo de dicho nodo del árbol.
+    \item (-)\textbf{Nodo*} hijo\_derecho : guarda el hijo derecho de dicho nodo del árbol.
+    \item (-)\textbf{char} símbolo : guarda el símbolo en la expresión regular.
+\end{itemize}
+
+\subsubsection{Métodos}
+La clase Nodo cuenta con los siguientes métodos:
+\begin{itemize}
+    \item (+)\textbf{Nodo*} obtener\_hijo\_izquierdo(): regresa el hijo izquierdo del nodo.
+    \item (+)\textbf{Nodo*} obtener\_hijo\_derecho(): regresa el hijo derecho del nodo.
+    \item (+)\textbf{void} asignar\_hijo\_izquierdo (Nodo* nodo): asigna el parámetro nodo al hijo izquierdo.
+    \item (+)\textbf{void} asignar\_hijo\_derecho (Nodo* nodo): asigna el parámetro nodo al hijo derecho.
+    \item (+)\textbf{char} obtener\_simbolo : regresa el símbolo que contiene el nodo
+    \item (+)\textbf{void} asignar\_simbolo(char sim) : asigna el símbolo sim al atributo símbolo. 
+\end{itemize}
+
+\subsection{Clase Thompson}
+
+\subsubsection{Descripción}
+La clase Thompson implementa el algoritmo de McNaughton-Yamada-Thompson que genera un AFN a partir de una expresión regular. \\
+
+\subsubsection{Atributos}
+La clase Nodo cuenta con los siguientes atributos:
+\begin{itemize}
+    \item (-)\textbf{Nodo*} arbol\_de\_expresion : es la raíz del árbol binario de expresión generado a partir de la expresión regular.
+    \item (-)\textbf{$map<pair<int, char>,unordered_set<int>>$} transiciones : guarda las transiciones del autómata. el formato es el siguiente map$<$ {(estado\_actual, símbolo)}, estado\_siguiente $>$.
+    
+\end{itemize}
+
+\subsubsection{Métodos}
+La clase Nodo cuenta con los siguientes métodos:
+\begin{itemize}
+    \item (+)\textbf{AutomadaFinitoNoDeterminista} convertir( string expresión\_regular ): recibe una expresión regular y genera el AFN correspondiente mediante el método de Thompson.
+    \item (-)\textbf{int} prioridad( char símbolo ): regresa la prioridad según la jerarquía de operadores en expresiones regulares.
+    \item (-)\textbf{Nodo*} generar\_arbol\_de\_expresion( Nodo *arbol, string postfijo ): genera y devuelve la raíz a un árbol de expresión binario.
+    \item (-)\textbf{void} inorden\_a\_postorden( string infijo, string \&postfijo ): Convierte la expresión regular de su forma infija a su forma postfija.
+    \item (-)\textbf{bool} es\_caracter( char símbolo ): Regresa verdadero si el carácter enviado es una letra de [a-z], o falso en caso contrario.
+    \item (-)\textbf{string} preprocesar\_infijo( string \&infijo ): añade el operador explícito '.' a la expresión regular.
+    \item (-)\textbf{pair$<$ pair$<$int,int$>$, vector$<$pair$<$int,char$>> >$}: generar\_transiciones( Nodo* raiz, int \&id ): El método generar transiciones genera las transiciones del AFN a partir del árbol binario de de expresión de la expresión regular, regresa \{ (inicio, final), \{transiciones\_a\_final\}\} de la presente transición generada.
+\end{itemize}
+
+
+\newpage
+\section{Conclusiones}
+Al terminar la realización de la práctica se pudo llegar a la conclusión de que el algoritmo es de gran utilidad al momento de construir analizadores léxicos, ya que permite generar un autómata a partir de una expresión regular. En cuanto a la implementación, se llegó a la conclusión de que el tiempo de implementación sobrepasó el tiempo que se esperaba.
+
+\end{document}

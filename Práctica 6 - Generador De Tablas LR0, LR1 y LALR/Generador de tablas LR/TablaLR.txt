@@ -1,0 +1,24 @@
+Símbolo inicial: A
+A->aBC	(1)
+A->bCD	(2)
+B->ABb	(3)
+B->Dab	(4)
+C->c	(5)
+D->d	(6)
+	a	b	c	d	$	A	B	C	D	
+1	d2 	d3 				4 				
+2	d2 	d3 		d22 		17 	6 		19 	
+3			d15 					11 		
+4					OK 					
+6			d15 					14 		
+11				d22 					21 	
+14	r1 	r1 		r1 	r1 					
+15	r5 	r5 		r5 	r5 					
+17	d2 	d3 		d22 		17 	27 		19 	
+19	d29 									
+21	r2 	r2 		r2 	r2 					
+22	r6 	r6 		r6 	r6 					
+27		d31 								
+29		d32 								
+31		r3 	r3 							
+32		r4 	r4 							
